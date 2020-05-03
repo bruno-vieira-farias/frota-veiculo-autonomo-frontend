@@ -1,6 +1,7 @@
 import React from 'react';
 import Routes from './routes'
 import './global.css'
+require('dotenv').config()
 // componente no react é uma função que retorna html
 // podendo ter funcionalidades javascript, css.
 
