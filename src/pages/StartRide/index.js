@@ -25,7 +25,7 @@ export default function RequestRace(props){
 
         try{
             const res =  await api.patch('rides/' + props.location.state._id, data);
-            history.push('/race/finish', res.data);
+            history.push('/ride/status', res.data);
         }
         catch (err){
             //alert(err.response.data);

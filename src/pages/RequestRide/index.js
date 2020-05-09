@@ -6,12 +6,13 @@ import logoImg from '../../assets/logo.png';
 
 import api from '../../services/api'
 
-export default function NewRunning(){
+export default function RequestRide(){
+
     const [startPlace, setstartPlace ] = useState('');
     const [finishPlace, setfinishPlace ] = useState('');
     const telephone = localStorage.getItem('userPhone');
     const history = useHistory();
-    async function handleNewIncident(event){
+    async function handleNewRide(event){
         event.preventDefault();
 
         const data ={
@@ -24,7 +25,7 @@ export default function NewRunning(){
            const res = await api.post('rides', data);
            
            //////// mandar para a nova tela de acompahamento da corrida
-           history.push('/race/new', res.data);
+           history.push('/ride/start', res.data);
 
         } catch(err){
             //alert('Erro ao solicitar corrida, tente novamente!')
@@ -37,7 +38,7 @@ export default function NewRunning(){
             <div className="content">
                 <section>
                 <img src={logoImg} alt="Me Leva Ai"/>
-                <h1>Cadastrar nova corrida</h1>
+                <h1>Solicitar corrida</h1>
                 <p>Informe a sua Origem e o seu Destino que o Me Leva Aí te leva!.</p>
 
                 <Link className="back-link" to="/profile">
@@ -46,7 +47,7 @@ export default function NewRunning(){
                 </Link>
 
                 </section>
-                <form onSubmit={handleNewIncident}>
+                <form onSubmit={handleNewRide}>
 
                 <input 
                     placeholder="Origem" 

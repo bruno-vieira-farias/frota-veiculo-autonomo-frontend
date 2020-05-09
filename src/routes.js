@@ -4,9 +4,9 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import Logon from './pages/Logon';
 import Register from './pages/Register';
 import Profile from './pages/Profile';
-import NewRunning from './pages/NewRunning'
-import RequestRace from './pages/RequestRace'
-import FinishRace from './pages/FinishRace'
+import RequestRide from './pages/RequestRide'
+import StartRide from './pages/StartRide'
+import Status from './pages/RideStatus'
 
 
 export default function Routes(){
@@ -16,9 +16,9 @@ export default function Routes(){
             <Route path="/"exact component={Logon} />
             <Route path="/register" component={Register} />
             <Route path="/profile" component={Profile} />
-            <Route path="/running/new" component={NewRunning} />
-            <Route path="/race/new" component={RequestRace} />
-            <Route path="/race/finish" component={FinishRace} />
+            <Route path="/ride/request" component={RequestRide} />
+            <Route path="/ride/start" component={StartRide} />
+            <Route path="/ride/status" component={Status} />
 
         </Switch>
         </BrowserRouter>

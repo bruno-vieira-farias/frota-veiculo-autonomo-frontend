@@ -4,6 +4,7 @@ import logoImg from '../../assets/logo.png'
 import { Link, useHistory } from 'react-router-dom'
 import { FiPower, FiArrowRight, FiArrowLeft } from 'react-icons/fi'
 import api from '../../services/api'
+
 export default function Profile() {
 
     const userName = localStorage.getItem('userName');
@@ -43,14 +44,24 @@ export default function Profile() {
         setPage(page - 1);
     }
 
+    function handleStatus(status){
+        console.log('status '+ status)
+        switch (status) {
+            case 'asked': return 'Solicitada'
+            case 'started': return 'Iniciada'
+            case 'finished': return 'Finalizada'
+            default: return ''
+        }
+    }
+
 
     return (
         <div className="profile-container">
             <header>
                 <img src={logoImg} alt="Me Leva Ai" />
                 <span>Bem vindo(a), {userName}</span>
-                <Link className="button" to="/running/new">
-                    Cadastrar nova corrida
+                <Link className="button" to="/ride/request">
+                    Solicitar corrida
                 </Link>
                 <button onClick={handleLogout}
                     type="button">
@@ -79,7 +90,8 @@ export default function Profile() {
                         <p>{new Date(props.finishTime).toLocaleString('pt-br')}</p>
 
                         <strong>STATUS</strong>
-                        <p>{props.status}</p>
+                        
+                        <p>{handleStatus(props.status)}</p>
 
                     </li>
                 ))}

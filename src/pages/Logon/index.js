@@ -23,16 +23,16 @@ export default function Logon() {
             if (res.data.ride != null) {
                 if (res.data.ride.status === "asked") {
                     alert('Já foi solicitada uma corrida.')
-                    history.push('/race/new', res.data.ride);
+                    history.push('/ride/start', res.data.ride);
                 }
                 else if (res.data.ride.status === "started") {
                     alert('Existe uma corrida em andamento.')
-                    history.push('/race/finish', res.data.ride);
+                    history.push('/ride/status', res.data.ride);
                 }
             }
             else {
                 // mandando para a rota de solicitaco de corrida
-                history.push('/running/new')
+                history.push('/ride/request')
             }
 
         }
