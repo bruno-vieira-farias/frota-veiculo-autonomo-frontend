@@ -6,7 +6,7 @@ import { Link, useHistory } from 'react-router-dom'
 import api from '../../services/api'
 
 import logoImg from '../../assets/logo.png'
-export default function FinishRace(props){
+export default function RideStatus(props){
    
     const history = useHistory();
 

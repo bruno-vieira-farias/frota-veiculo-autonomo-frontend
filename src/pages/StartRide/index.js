@@ -6,7 +6,7 @@ import { Link, useHistory } from 'react-router-dom'
 import api from '../../services/api'
 
 import logoImg from '../../assets/logo.png'
-export default function RequestRace(props){
+export default function RequestRide(props){
     // criando os estados para manipular os inputs 
     const history = useHistory();
     

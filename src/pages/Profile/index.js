@@ -9,6 +9,7 @@ export default function Profile() {
 
     const userName = localStorage.getItem('userName');
     const userPhone = localStorage.getItem('userPhone');
+    const [item, setItem] = useState([]);
     const [items, setItems] = useState([]);
     const [page, setPage] = useState(1)
     const [pages, setPages] = useState(0);
@@ -21,6 +22,13 @@ export default function Profile() {
             .then(res => {
                 setItems(res.data.docs);
                 setPages(res.data.pages);
+            })
+    }, [userPhone, page]);
+
+    useEffect(() => {
+        api.get('rides/current/users/' + userPhone)
+            .then(res => {
+                setItem(res.data);                
             })
     }, [userPhone, page]);
 
@@ -54,15 +62,88 @@ export default function Profile() {
         }
     }
 
+    function CorridaAtual(){
+        
+        if(item !== null && item !== undefined && item.length > 0){
+            let ride = item[0]
+            return(
+                <div>
+                <h1>Corrida Atual</h1>
+                <ul>
+            <li>
+                
+                <strong>VEÍCULO:</strong>
+
+                <p>{ride.vehicle.licensePlate}</p>
+
+                <strong>ORIGEM E DESTINO:</strong>
+                <p>{ride.startPlace}</p> <p>{ride.finishPlace}</p>
+
+                <strong>STATUS</strong>
+                
+                <p>{handleStatus(ride.status)}</p>
+            </li>
+            </ul></div>)
+        }
+        else{
+            return <span/>;
+        }
+    }
+
+    function Historico(){
+        return(
+            <div>
+            <h1>Histórico de Corridas</h1>
+            <ul>
+                {items.map(props => (
+                    <li key={props._id}>
+                        <strong>VEÍCULO:</strong>
+                        <p>{props.vehicle.licensePlate}</p>
+
+                        <strong>ORIGEM E DESTINO:</strong>
+                        <p>{props.startPlace}</p> <p>{props.finishPlace}</p>
+
+                        <strong>DATA E HORA DE CHEGADA:</strong>
+                        
+                        <p>{new Date(props.finishTime).toLocaleString('pt-br')}</p>
+
+                        <strong>STATUS</strong>
+                        
+                        <p>{handleStatus(props.status)}</p>
+
+                    </li>
+                ))}
+            </ul>
+        </div>
+        )
+    }
+
+    function RideButton(){
+        if(item.length > 0){
+            if(item[0].status === 'asked'){
+                return(<Link className="button" to={{pathname: "/ride/start", state: item[0]}}>
+                    Ir para corrida
+                </Link>)
+            }
+            else{
+                return(<Link className="button" to={{pathname: "/ride/status", state: item[0]}}>
+                    Ir para corrida
+                </Link>)
+            }
+        }
+        else{
+            return(<Link className="button" to="/ride/request">
+                Solicitar corrida
+            </Link>)
+        }
+    }
 
     return (
         <div className="profile-container">
             <header>
                 <img src={logoImg} alt="Me Leva Ai" />
                 <span>Bem vindo(a), {userName}</span>
-                <Link className="button" to="/ride/request">
-                    Solicitar corrida
-                </Link>
+                <RideButton />
                 <button onClick={handleLogout}
                     type="button">
                     <FiPower size={14} color="#E02041" />
@@ -76,29 +157,11 @@ export default function Profile() {
                 </button>
                
             </header>
-            <h1>Histórico de Corridas</h1>
-            <ul>
-                {items.map(props => (
-                    <li key={props._id}>
-                        <strong>VEÍCULO:</strong>
-                        <p>{props.vehicle.licensePlate}</p>
-
-                        <strong>ORIGEM E DESTINO:</strong>
-                        <p>{props.startPlace}</p> <p>{props.finishPlace}</p>
-
-                        <strong>DATA E HORA DE CHEGADA:</strong>
-                        <p>{new Date(props.finishTime).toLocaleString('pt-br')}</p>
-
-                        <strong>STATUS</strong>
-                        
-                        <p>{handleStatus(props.status)}</p>
-
-                    </li>
-                ))}
-
-            </ul>
-
-
+            
+            <CorridaAtual />
+            
+            <Historico />
+        
         </div>
     );
 }

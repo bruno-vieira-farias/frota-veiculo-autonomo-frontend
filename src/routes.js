@@ -6,7 +6,7 @@ import Register from './pages/Register';
 import Profile from './pages/Profile';
 import RequestRide from './pages/RequestRide'
 import StartRide from './pages/StartRide'
-import Status from './pages/RideStatus'
+import RideStatus from './pages/RideStatus'
 
 
 export default function Routes(){
@@ -18,7 +18,7 @@ export default function Routes(){
             <Route path="/profile" component={Profile} />
             <Route path="/ride/request" component={RequestRide} />
             <Route path="/ride/start" component={StartRide} />
-            <Route path="/ride/status" component={Status} />
+            <Route path="/ride/status" component={RideStatus} />
 
         </Switch>
         </BrowserRouter>
